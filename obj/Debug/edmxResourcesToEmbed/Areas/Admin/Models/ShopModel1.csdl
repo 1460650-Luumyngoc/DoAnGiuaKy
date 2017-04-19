@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="webbandienthoaiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ctdonhang">
+    <Key>
+      <PropertyRef Name="MaDH" />
+      <PropertyRef Name="MaSP" />
+    </Key>
+    <Property Name="MaDH" Type="Int32" Nullable="false" />
+    <Property Name="MaSP" Type="Int32" Nullable="false" />
+    <Property Name="DonGia" Type="Int32" Nullable="false" />
+    <Property Name="SoLuong" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="donhang" Relationship="Self.ctdonhang_ibfk_1" FromRole="ctdonhang" ToRole="donhang" />
+    <NavigationProperty Name="sanpham" Relationship="Self.ctdonhang_ibfk_2" FromRole="ctdonhang" ToRole="sanpham" />
+  </EntityType>
+  <EntityType Name="donhang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="MaKH" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NgayDat" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TinhTrang" Type="Int32" Nullable="false" />
+    <Property Name="GhiChu" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="ctdonhangs" Relationship="Self.ctdonhang_ibfk_1" FromRole="donhang" ToRole="ctdonhang" />
+    <NavigationProperty Name="taikhoan" Relationship="Self.donhang_ibfk_1" FromRole="donhang" ToRole="taikhoan" />
+    <NavigationProperty Name="hoadon" Relationship="Self.hoadon_ibfk_1" FromRole="donhang" ToRole="hoadon" />
+  </EntityType>
+  <EntityType Name="giohang">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MaSP" Type="Int32" />
+    <Property Name="DonGia" Type="Int32" />
+    <Property Name="SoLuong" Type="Int32" />
+    <NavigationProperty Name="taikhoan" Relationship="Self.giohang_ibfk_1" FromRole="giohang" ToRole="taikhoan" />
+  </EntityType>
+  <EntityType Name="hoadon">
+    <Key>
+      <PropertyRef Name="MaDH" />
+    </Key>
+    <Property Name="MaDH" Type="Int32" Nullable="false" />
+    <Property Name="TongTien" Type="Int32" Nullable="false" />
+    <Property Name="NgayGiao" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="donhang" Relationship="Self.hoadon_ibfk_1" FromRole="hoadon" ToRole="donhang" />
+  </EntityType>
+  <EntityType Name="loaisp">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="TenLoai" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="sanphams" Relationship="Self.sanpham_ibfk_2" FromRole="loaisp" ToRole="sanpham" />
+  </EntityType>
+  <EntityType Name="nhasx">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="TenNSX" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HinhAnh" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="sanphams" Relationship="Self.sanpham_ibfk_1" FromRole="nhasx" ToRole="sanpham" />
+  </EntityType>
+  <EntityType Name="sanpham">
+    <Key>
+      <PropertyRef Name="MaSanPham" />
+    </Key>
+    <Property Name="MaSanPham" Type="Int32" Nullable="false" />
+    <Property Name="TenSanPham" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="hinhanh" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Gia" Type="Int32" />
+    <Property Name="MaLoai" Type="Int32" />
+    <Property Name="NhaSX" Type="Int32" />
+    <Property Name="SoLuongTon" Type="Int32" />
+    <Property Name="MoTa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ctdonhangs" Relationship="Self.ctdonhang_ibfk_2" FromRole="sanpham" ToRole="ctdonhang" />
+    <NavigationProperty Name="loaisp" Relationship="Self.sanpham_ibfk_2" FromRole="sanpham" ToRole="loaisp" />
+    <NavigationProperty Name="nhasx1" Relationship="Self.sanpham_ibfk_1" FromRole="sanpham" ToRole="nhasx" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="taikhoan">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Pass" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HoTen" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DiaChi" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="SDT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Level" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="donhangs" Relationship="Self.donhang_ibfk_1" FromRole="taikhoan" ToRole="donhang" />
+    <NavigationProperty Name="giohang" Relationship="Self.giohang_ibfk_1" FromRole="taikhoan" ToRole="giohang" />
+  </EntityType>
+  <Association Name="ctdonhang_ibfk_1">
+    <End Role="donhang" Type="Self.donhang" Multiplicity="1" />
+    <End Role="ctdonhang" Type="Self.ctdonhang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="donhang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ctdonhang">
+        <PropertyRef Name="MaDH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ctdonhang_ibfk_2">
+    <End Role="sanpham" Type="Self.sanpham" Multiplicity="1" />
+    <End Role="ctdonhang" Type="Self.ctdonhang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sanpham">
+        <PropertyRef Name="MaSanPham" />
+      </Principal>
+      <Dependent Role="ctdonhang">
+        <PropertyRef Name="MaSP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="donhang_ibfk_1">
+    <End Role="taikhoan" Type="Self.taikhoan" Multiplicity="1" />
+    <End Role="donhang" Type="Self.donhang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="taikhoan">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="donhang">
+        <PropertyRef Name="MaKH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="hoadon_ibfk_1">
+    <End Role="donhang" Type="Self.donhang" Multiplicity="1" />
+    <End Role="hoadon" Type="Self.hoadon" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="donhang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="hoadon">
+        <PropertyRef Name="MaDH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="giohang_ibfk_1">
+    <End Role="taikhoan" Type="Self.taikhoan" Multiplicity="1" />
+    <End Role="giohang" Type="Self.giohang" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="taikhoan">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="giohang">
+        <PropertyRef Name="Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="sanpham_ibfk_2">
+    <End Role="loaisp" Type="Self.loaisp" Multiplicity="0..1" />
+    <End Role="sanpham" Type="Self.sanpham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="loaisp">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="sanpham">
+        <PropertyRef Name="MaLoai" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="sanpham_ibfk_1">
+    <End Role="nhasx" Type="Self.nhasx" Multiplicity="0..1" />
+    <End Role="sanpham" Type="Self.sanpham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nhasx">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="sanpham">
+        <PropertyRef Name="NhaSX" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="webbandienthoaiEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ctdonhangs" EntityType="Self.ctdonhang" />
+    <EntitySet Name="donhangs" EntityType="Self.donhang" />
+    <EntitySet Name="giohangs" EntityType="Self.giohang" />
+    <EntitySet Name="hoadons" EntityType="Self.hoadon" />
+    <EntitySet Name="loaisps" EntityType="Self.loaisp" />
+    <EntitySet Name="nhasxes" EntityType="Self.nhasx" />
+    <EntitySet Name="sanphams" EntityType="Self.sanpham" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="taikhoans" EntityType="Self.taikhoan" />
+    <AssociationSet Name="ctdonhang_ibfk_1" Association="Self.ctdonhang_ibfk_1">
+      <End Role="donhang" EntitySet="donhangs" />
+      <End Role="ctdonhang" EntitySet="ctdonhangs" />
+    </AssociationSet>
+    <AssociationSet Name="ctdonhang_ibfk_2" Association="Self.ctdonhang_ibfk_2">
+      <End Role="sanpham" EntitySet="sanphams" />
+      <End Role="ctdonhang" EntitySet="ctdonhangs" />
+    </AssociationSet>
+    <AssociationSet Name="donhang_ibfk_1" Association="Self.donhang_ibfk_1">
+      <End Role="taikhoan" EntitySet="taikhoans" />
+      <End Role="donhang" EntitySet="donhangs" />
+    </AssociationSet>
+    <AssociationSet Name="hoadon_ibfk_1" Association="Self.hoadon_ibfk_1">
+      <End Role="donhang" EntitySet="donhangs" />
+      <End Role="hoadon" EntitySet="hoadons" />
+    </AssociationSet>
+    <AssociationSet Name="giohang_ibfk_1" Association="Self.giohang_ibfk_1">
+      <End Role="taikhoan" EntitySet="taikhoans" />
+      <End Role="giohang" EntitySet="giohangs" />
+    </AssociationSet>
+    <AssociationSet Name="sanpham_ibfk_2" Association="Self.sanpham_ibfk_2">
+      <End Role="loaisp" EntitySet="loaisps" />
+      <End Role="sanpham" EntitySet="sanphams" />
+    </AssociationSet>
+    <AssociationSet Name="sanpham_ibfk_1" Association="Self.sanpham_ibfk_1">
+      <End Role="nhasx" EntitySet="nhasxes" />
+      <End Role="sanpham" EntitySet="sanphams" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="webbandienthoaiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ctdonhang">
+    <Key>
+      <PropertyRef Name="MaDH" />
+      <PropertyRef Name="MaSP" />
+    </Key>
+    <Property Name="MaDH" Type="int" Nullable="false" />
+    <Property Name="MaSP" Type="int" Nullable="false" />
+    <Property Name="DonGia" Type="int" Nullable="false" />
+    <Property Name="SoLuong" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="donhang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="MaKH" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="NgayDat" Type="date" Nullable="false" />
+    <Property Name="TinhTrang" Type="int" Nullable="false" />
+    <Property Name="GhiChu" Type="varchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="giohang">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="MaSP" Type="int" />
+    <Property Name="DonGia" Type="int" />
+    <Property Name="SoLuong" Type="int" />
+  </EntityType>
+  <EntityType Name="hoadon">
+    <Key>
+      <PropertyRef Name="MaDH" />
+    </Key>
+    <Property Name="MaDH" Type="int" Nullable="false" />
+    <Property Name="TongTien" Type="int" Nullable="false" />
+    <Property Name="NgayGiao" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="loaisp">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="TenLoai" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="nhasx">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="TenNSX" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="HinhAnh" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sanpham">
+    <Key>
+      <PropertyRef Name="MaSanPham" />
+    </Key>
+    <Property Name="MaSanPham" Type="int" Nullable="false" />
+    <Property Name="TenSanPham" Type="varchar" MaxLength="100" />
+    <Property Name="hinhanh" Type="varchar" MaxLength="100" />
+    <Property Name="Gia" Type="int" />
+    <Property Name="MaLoai" Type="int" />
+    <Property Name="NhaSX" Type="int" />
+    <Property Name="SoLuongTon" Type="int" />
+    <Property Name="MoTa" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="taikhoan">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Pass" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="HoTen" Type="varchar" MaxLength="100" />
+    <Property Name="DiaChi" Type="varchar" MaxLength="250" />
+    <Property Name="SDT" Type="varchar" MaxLength="20" />
+    <Property Name="Level" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <Association Name="ctdonhang_ibfk_1">
+    <End Role="donhang" Type="Self.donhang" Multiplicity="1" />
+    <End Role="ctdonhang" Type="Self.ctdonhang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="donhang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ctdonhang">
+        <PropertyRef Name="MaDH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ctdonhang_ibfk_2">
+    <End Role="sanpham" Type="Self.sanpham" Multiplicity="1" />
+    <End Role="ctdonhang" Type="Self.ctdonhang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sanpham">
+        <PropertyRef Name="MaSanPham" />
+      </Principal>
+      <Dependent Role="ctdonhang">
+        <PropertyRef Name="MaSP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="donhang_ibfk_1">
+    <End Role="taikhoan" Type="Self.taikhoan" Multiplicity="1" />
+    <End Role="donhang" Type="Self.donhang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="taikhoan">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="donhang">
+        <PropertyRef Name="MaKH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="giohang_ibfk_1">
+    <End Role="taikhoan" Type="Self.taikhoan" Multiplicity="1" />
+    <End Role="giohang" Type="Self.giohang" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="taikhoan">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="giohang">
+        <PropertyRef Name="Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="hoadon_ibfk_1">
+    <End Role="donhang" Type="Self.donhang" Multiplicity="1" />
+    <End Role="hoadon" Type="Self.hoadon" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="donhang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="hoadon">
+        <PropertyRef Name="MaDH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="sanpham_ibfk_1">
+    <End Role="nhasx" Type="Self.nhasx" Multiplicity="0..1" />
+    <End Role="sanpham" Type="Self.sanpham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nhasx">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="sanpham">
+        <PropertyRef Name="NhaSX" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="sanpham_ibfk_2">
+    <End Role="loaisp" Type="Self.loaisp" Multiplicity="0..1" />
+    <End Role="sanpham" Type="Self.sanpham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="loaisp">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="sanpham">
+        <PropertyRef Name="MaLoai" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="webbandienthoaiModelStoreContainer">
+    <EntitySet Name="ctdonhang" EntityType="Self.ctdonhang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="donhang" EntityType="Self.donhang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="giohang" EntityType="Self.giohang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="hoadon" EntityType="Self.hoadon" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="loaisp" EntityType="Self.loaisp" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="nhasx" EntityType="Self.nhasx" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sanpham" EntityType="Self.sanpham" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="taikhoan" EntityType="Self.taikhoan" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="ctdonhang_ibfk_1" Association="Self.ctdonhang_ibfk_1">
+      <End Role="donhang" EntitySet="donhang" />
+      <End Role="ctdonhang" EntitySet="ctdonhang" />
+    </AssociationSet>
+    <AssociationSet Name="ctdonhang_ibfk_2" Association="Self.ctdonhang_ibfk_2">
+      <End Role="sanpham" EntitySet="sanpham" />
+      <End Role="ctdonhang" EntitySet="ctdonhang" />
+    </AssociationSet>
+    <AssociationSet Name="donhang_ibfk_1" Association="Self.donhang_ibfk_1">
+      <End Role="taikhoan" EntitySet="taikhoan" />
+      <End Role="donhang" EntitySet="donhang" />
+    </AssociationSet>
+    <AssociationSet Name="giohang_ibfk_1" Association="Self.giohang_ibfk_1">
+      <End Role="taikhoan" EntitySet="taikhoan" />
+      <End Role="giohang" EntitySet="giohang" />
+    </AssociationSet>
+    <AssociationSet Name="hoadon_ibfk_1" Association="Self.hoadon_ibfk_1">
+      <End Role="donhang" EntitySet="donhang" />
+      <End Role="hoadon" EntitySet="hoadon" />
+    </AssociationSet>
+    <AssociationSet Name="sanpham_ibfk_1" Association="Self.sanpham_ibfk_1">
+      <End Role="nhasx" EntitySet="nhasx" />
+      <End Role="sanpham" EntitySet="sanpham" />
+    </AssociationSet>
+    <AssociationSet Name="sanpham_ibfk_2" Association="Self.sanpham_ibfk_2">
+      <End Role="loaisp" EntitySet="loaisp" />
+      <End Role="sanpham" EntitySet="sanpham" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
